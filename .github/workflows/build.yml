@@ -11,34 +11,35 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    
     - name: Setup build kernel environment
       run: |
         sudo apt update
-        sudo apt install libc6-dev clang flex bison libssl-dev bc python3 python2 zip unzip git lld llvm
-        mkdir -p $GITHUB_WORKSPACE/kernel_workspace
+        sudo apt install -y libc6-dev clang flex bison libssl-dev bc python3 python2 zip unzip git lld llvm
+        mkdir -p kernel_workspace
         
     - name: Download Proton-clang
       run: |
-        cd $GITHUB_WORKSPACE/kernel_workspace
+        cd kernel_workspace
         git clone https://github.com/kdrag0n/proton-clang.git proton-clang --depth=1
-        export PATH="$GITHUB_WORKSPACE/kernel_workspace/proton-clang/bin:$PATH"
+        echo "export PATH=$PWD/proton-clang/bin:\$PATH" >> $GITHUB_ENV
         
     - name: Download kernel source
       run: |
-        cd $GITHUB_WORKSPACE/kernel_workspace
+        cd kernel_workspace
         git clone https://github.com/Lisa-Atoll-Resources/android_kernel_qcom_sm8350.git --depth=1
 
     - name: Compiling Kernel
       run: |
-        cd $GITHUB_WORKSPACE/kernel_workspace/android_kernel_qcom_sm8350
+        cd kernel_workspace/android_kernel_qcom_sm8350
         chmod +x build.sh
         ./build.sh
-        filename=$(find . -name Crafters* -printf '%f\n')
-        echo $filename
-        echo "FILENAME=$filename" >> $GITHUB_ENV
-        
+        filename=$(find . -name "Crafters*" | head -n 1)
+        echo "FILENAME=$(basename $filename)" >> $GITHUB_ENV
+
     - name: Uploading Kernel
       uses: actions/upload-artifact@v4
       with:
         name: Crafters
-        path: ${{ github.workspace }}/kernel_workspace/android_kernel_qcom_sm8350/${{ env.FILENAME }}
+        path: kernel_workspace/android_kernel_qcom_sm8350/${{ env.FILENAME }}
+        
