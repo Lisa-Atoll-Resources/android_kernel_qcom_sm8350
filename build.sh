@@ -47,7 +47,7 @@ echo -e "\nKernel compiled succesfully! Zipping up...\n"
 git clone -q https://github.com/ItsVixano/AnyKernel3 -b lisa-aosp
 cp $kernel AnyKernel3
 cp $dtb AnyKernel3/dtb
-python2 scripts/dtc/libfdt/mkdtboimg.py create AnyKernel3/dtbo.img --page_size=4096 $dtbo
+python3 scripts/dtc/libfdt/mkdtboimg.py create AnyKernel3/dtbo.img --page_size=4096 $dtbo
 cp $(find out/modules/lib/modules/5.4* -name '*.ko') AnyKernel3/modules/vendor/lib/modules/
 cp out/modules/lib/modules/5.4*/modules.{alias,dep,softdep} AnyKernel3/modules/vendor/lib/modules
 cp out/modules/lib/modules/5.4*/modules.order AnyKernel3/modules/vendor/lib/modules/modules.load
