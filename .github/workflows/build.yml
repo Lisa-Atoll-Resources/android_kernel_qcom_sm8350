@@ -15,7 +15,7 @@ jobs:
     - name: Setup build kernel environment
       run: |
         sudo apt update
-        sudo apt install -y libc6-dev clang flex bison libssl-dev bc python3 python2 zip unzip git lld llvm
+        sudo apt install -y libc6-dev clang flex bison libssl-dev bc python3 zip unzip git lld llvm
         mkdir -p kernel_workspace
         
     - name: Download Proton-clang
