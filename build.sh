@@ -55,6 +55,6 @@ sed -i 's/\(kernel\/[^: ]*\/\)\([^: ]*\.ko\)/\/vendor\/lib\/modules\/\2/g' AnyKe
 sed -i 's/.*\///g' AnyKernel3/modules/vendor/lib/modules/modules.load
 rm -rf out/arch/arm64/boot out/modules
 cd AnyKernel3
-zip -r9 "../$ZIPNAME" * -x .git README.md *placeholder
+zip -r9 "../$ZIPNAME" * -x .git README.md *placeholder"
 cd ..
 rm -rf AnyKernel3
